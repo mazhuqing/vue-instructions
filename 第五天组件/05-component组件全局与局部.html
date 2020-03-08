@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .navbar {
+            background-color: red;
+        }
+    </style>
+    <script src="dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <!-- 全局定义组件，可以在任何地方来用 -->
+        <navbar></navbar>
+        <navbarChild1></navbarChild1>
+        <!-- 局部定义不能写在模板上，仅限于某个组件内部来用 -->
+        <!-- <navbarChild2></navbarChild2> -->
+    </div>
+
+    <script>
+        // 全局组件定义方式,必须要写在Vue前面。之上而下执行
+        //navbar随便起的名字
+        //组件是一个孤岛，无法（直接）访问到外部的data，methods.....
+        //将来可以通过通信方式来进行沟通
+
+        //全局定义
+        Vue.component("navbarChild1", {
+            template: `<div style="background:yellow;">
+                1、不要吐槽此时的组件，我虽然没有高亮，虽然没有代码提示，
+                但是这个事件，能用上我，也是一种好的选择
+                2、样式这个时候只能先写行内样式。
+                3、之后单文件组件都会解决这些问题。
+                </div>`
+        })
+
+        Vue.component("navbar", {
+            template: `
+            <div>
+            <nav style="background:red;">
+                <button @click="handleClick()">返回</button>
+               <navbarChild1></navbarChild1>
+               <navbarChild2></navbarChild2>
+                <ul>
+                    <li>
+                        11111111
+                        </li>
+                        <li>
+                        22222222
+                        </li>
+                    </ul>
+                    {{myname}}
+                </nav>
+                <div>最外层必须要有root element</div>
+                </div>
+                `,
+            components: {
+                // 局部定义组件
+                navbarChild2: {
+                    //data(){},
+                    //methods(){},
+                    template: `
+                        <div style="background:blue;">我是局部定义的，其他人休想得到我</div>
+                        `
+                }
+            },
+            methods: {
+                handleClick() {
+                    console.log("返回功能")
+                }
+            },
+            //组件中，data必须是一个方法，return返回给对象
+            //设置成函数，保证data不会相互影响
+            data() {
+                return {
+                    myname: "我是导航栏"
+                }
+
+            }
+
+
+        })
+
+        //new vue实例  （实际上new vue也是个组件 root  component
+        new Vue({
+            el: "#box",
+
+        })
+    </script>
+</body>
+
+</html>

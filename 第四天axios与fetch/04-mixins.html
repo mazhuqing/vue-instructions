@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <button @click="handlGet()">
+            ajax-get
+        </button>
+        <button @click="handlPost()">
+            ajax-post
+        </button>
+        {{getA}}
+    </div>
+
+    <script>
+        // mixins公共方法引入，没有vue里面方法的优先级高
+        var http = {
+            // 方法名字必须一样，这样才可以混合在一起
+            methods: {
+                handlGet() {
+
+                    console.log("ajax.get()...,业务逻辑")
+                },
+                handlPost() {
+                    console.log("ajax.post()...,业务逻辑")
+                }
+            },
+            computed: {
+                getA(){
+                    return "aaaaa";
+                }
+            }
+
+        }
+
+
+
+        var vm = new Vue({
+            el: "#box",
+            // 引入上面http
+            mixins: [http],
+            data: {
+
+            },
+            methods: {
+                // 只做视图逻辑
+                // 如果同名的话，亲儿子的优先级最高
+                handlGet() {
+
+                    console.log("ajax.get()...,业务逻辑---vue实例定义")
+                },
+            }
+
+        })
+    </script>
+</body>
+
+</html>

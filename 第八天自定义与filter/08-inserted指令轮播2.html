@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
+    <script src="https://unpkg.com/swiper/js/swiper.js"> </script>
+    <script src="../dist/vue.js"></script>
+    <style>
+        .swiper-container {
+            width: 600px;
+            height: 300px;
+            background: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div class="swiper-container kerwin">
+            <div class="swiper-wrapper">
+                <!-- v-swiper赋一个对象 -->
+                <div class="swiper-slide" v-for="(data,index) in datalist" v-swiper="{
+                    index:index,
+                    length:datalist.length
+                }">
+                    {{data}}
+                </div>
+            </div>
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+
+        <!-- 分页器 -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+
+    <script>
+        Vue.directive("swiper", {
+            inserted(el, binding,vnode,oldvnode) {
+                console.log("新的虚拟dom",vnode.context.datalist)
+                console.log("老的虚拟dom",oldvnode)
+                //可以拿到数组长度
+                let {index,length} = binding.value
+                //  console.log(binding.value)
+                if (index  ===vnode.context.datalist.length - 1) {
+                    //最后一个节点插入dom成功
+                    new Swiper(".kerwin", {
+                        // 无限轮播
+                        loop: true,
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        pagination: {
+                            el: '.swiper-pagination',
+                        },
+                        autoplay: {
+                            delay: 2500,
+                            disableOnInteraction: false,
+                        }
+                    })
+                }
+            }
+        })
+
+   var vm = new Vue({
+            el: "#box",
+            data: {
+                datalist: []
+            },
+            mounted() {
+                setTimeout(() => {
+                    this.datalist = ["xiaoming", "xiaohong", "xiaoqian", "xiaohua"]
+
+                }, 2000)
+            }
+        })
+    </script>
+</body>
+
+</html>

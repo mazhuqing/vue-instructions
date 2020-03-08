@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        {{mytitle}}
+        <!-- .sync同步意思,事件修饰符,这是修改父组件的方法，很危险，最好别用 -->
+        <child :title.sync="mytitle"></child>
+    </div>
+    <script>
+        Vue.component("child",{
+            template:`<div>child--{{title}}
+            <button @click="handeleClick()">胆大的按钮</button>
+            </div>
+            `,
+            methods:{
+                handeleClick(){
+                    // this.title="kerwin-" + this.title
+                    //update:更新。也是固定属性的。
+                    this.$emit("update:title","22222")
+                }
+            },
+            props:["title"]
+        })
+
+        new Vue({
+            el:"#box",
+            data:{
+                mytitle:"1111111"
+            }
+        })
+    </script>
+</body>
+</html>

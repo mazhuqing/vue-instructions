@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <!-- 必须加v- -->
+        <div v-hello="'red'">{{myname}}</div>
+      <div v-hello="'yellow'">{{myname}}</div>
+      <div v-hello="'blue'">{{myname}}</div>
+      {{mycolor}}
+      <div v-hello="mycolor">{{myname}}</div>
+      <input type="text" v-focus/>
+    </div>
+
+    <script>
+        Vue.directive("hello",{
+            //binding自定义，可以拿到传过来的值
+            //inserted只要一插入dom，会被调用，获取原生dom
+            inserted(el,binding){
+            //inserted指令的生命周期之一，这个节点插入dom，会被第一次调用
+            //el可以拿到原生的dom节点  
+            //第一次会被渲染，后面将不会渲染，需要用update
+                console.log(el)
+                console.log(binding.value)
+                el.style.background=binding.value
+            },
+            update(){
+                //update不是updated
+                //会被重新调用，然后渲染视图
+                el.style.background=binding.value
+            }
+        })
+
+        Vue.directive("focus",{
+            inserted(el){
+                el.focus()
+            }
+        })
+        new Vue({
+            el:"#box",
+            data:{
+                mycolor:"pink",
+                myname:"kerwin"
+            },
+        })
+    </script>
+</body>
+</html>

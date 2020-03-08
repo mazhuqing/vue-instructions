@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <navbar @kwerwinevent="handleEvent"></navbar>
+
+        <sidebar v-show="isShow"></sidebar>
+    </div>
+    
+
+    <script>
+        Vue.component("navbar",{
+            template:`
+            <div style="background:red;">
+            <button @click="handleClick">click</button>
+            </div>
+            `,
+            methods:{
+                handleClick(){
+                    this.$emit("kwerwinevent")
+                }
+            },
+        })
+
+        Vue.component("sidebar",{
+            template:`
+            <div style="background:yellow;windth:200px;height:500px">
+            <ul>
+                <li>111</li>
+                <li>222</li>
+                <li>333</li>
+            </ul>
+            </div>
+            `
+        })
+
+        new Vue({
+            el:"#box",
+            data:{
+                isShow:false
+            },
+            methods:{
+                handleEvent(){
+                    this.isShow =! this.isShow
+                }
+            }
+        })
+    </script>
+</body>
+</html>

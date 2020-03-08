@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <input type="checkbox" v-model="isAllChecked" @change="handleChange" />
+        <ul>
+            <li v-for="data in datalist" :key="data.id">
+                <input type="checkbox" v-model="checkgroup" :value="data" @change="handleItemchange" />{{data}}
+
+                <button @click="handleDel(data)">del</button>
+                {{data.number}}
+                <button @click="data.number++">add</button>
+            </li>
+        </ul>
+        {{checkgroup}}
+        <p>总金额{{ sum() }}</p>
+        <p>总金额-计算属性{{ computedSum }}</p>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#box",
+            data: {
+                isAllChecked: false,
+                mytext: "1111",
+                checkgroup: [],
+                datalist: [
+                    {
+                        name: "商品1",
+                        price: 10,
+                        number: 1,
+                        id: "1",
+                    },
+                    {
+                        name: "商品2",
+                        price: 20,
+                        number: 2,
+                        id: "2",
+                    },
+                    {
+                        name: "商品3",
+                        price: 30,
+                        number: 3,
+                        id: "3",
+                    }
+                ]
+            },
+            computed: {
+                computedSum() {
+                    var mysum = 0;
+                    for (var i in this.checkgroup) {
+                        mysum += this.checkgroup[i].number * this.checkgroup[i].price
+                    }
+                    return mysum
+                },
+            },
+            methods: {
+                handleDel(data) {
+                    console.log(data)
+                    data.number--;
+                    if (data.number === 0) {
+                        data.number = 1
+                    }
+                },
+                handleChange() {
+                    //console.log(this.isAllChecked)
+                    if (this.isAllChecked) {
+                        this.checkgroup = this.datalist
+                    } else {
+                        this.checkgroup = []
+                    }
+                },
+                handleItemchange() {
+                    //console.log("aaaa")
+                    if (this.checkgroup.length === this.datalist.length) {
+                        console.log("全选")
+                        this.isAllChecked = true;
+                    } else {
+                        // console.log("全不选")
+                        this.isAllChecked = false;
+                    }
+                },
+                sum() {
+                    var mysum = 0;
+                    for (var i in this.checkgroup) {
+                        mysum += this.checkgroup[i].number * this.checkgroup[i].price
+                    }
+                    return mysum
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <input type="text" v-model="mytext">
+        <button @click="handleCilick()">add</button>
+
+        <ul>
+            <li v-for="(item,index) in items">
+                {{item}}--{{index}}
+                <button @click="handleDelClick(index)">del</button>
+            </li>
+        </ul>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                mytext:"",  //状态
+                items:["aaa","bbb","ccc","ddd"]
+            },
+            methods:{
+                handleCilick(){
+                    console.log("输入框value",this.mytext)
+                    this.items.push(this.mytext)
+         },
+                handleDelClick(index){
+                    console.log("del",index)
+                    this.items.splice(index,1)
+                }
+            },
+        })
+    </script>
+</body>
+</html>

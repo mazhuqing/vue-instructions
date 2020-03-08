@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <div v-if="datalist.length">
+            <ul>
+                <li v-for="data in datalist">
+                    {{data}}
+                </li>
+            </ul>
+        </div>
+        <div v-else>购物车空空如也</div>
+        <div v-if="type === 1">买家付款</div>
+        <div v-else-if="type === 2">卖家发货</div>
+        <div v-else-if="type === 3">买家收货</div>
+        <div v-else>订单开始</div>
+
+        <!-- template：为包装元素。在页面也不显示。Vue标签属性 -->
+        <template v-if="iscreated">
+            <div>11111111</div>
+            <div>22222222</div>
+            <div>33333333</div>
+        </template>
+    </div>
+
+    <script>
+        new Vue({
+            el:"#box",
+            data:{
+                iscreated:true,
+                datalist:[],
+                type:1
+            }
+        })
+    </script>
+</body>
+</html>

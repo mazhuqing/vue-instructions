@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <child>
+            <!-- v-slot: 新的Vue的新的指令化写法 -->
+            <template v-slot:a>
+                <div>联通卡</div> 
+            </template>
+            <template v-slot:b>
+                <div>移动卡</div>
+            </template>
+            <template v-slot:c>
+                <div>电信卡</div>
+            </template>
+        </child>
+
+    </div>
+
+    <script>
+        Vue.component("child",{
+            template:`
+            <div>
+           11111
+            <slot name="a"></slot>
+            2222
+            <slot name="b"></slot>
+            333333
+            <slot name="c"></slot>
+            </div>
+            `
+        })
+
+        new Vue({
+            el:"#box",
+
+        })
+    </script>
+</body>
+</html>

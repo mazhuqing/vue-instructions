@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <input type="text" v-model="mytext">
+        <child :value="mytext" @input="handeleEvent"></child>
+        
+        <!-- :value="" @input=""属于语法糖，被隐藏， -->
+        <childmodel v-model="mytext" ></child>
+    </div>
+    <script>
+        Vue.component("childmodel",{
+            template:`
+            <div>
+            childmodel--{{value}}
+                <button @click="handleClick">click</button>
+            </div>
+            `,
+            //固定的就需要value接收。不能胡乱改变
+            props:["value"],
+            methods:{
+                handleClick(){
+                    //如果你想改变值，就必须写input，不能改变
+                    this.$emit("input","2222222")
+                }
+            }
+        })
+
+        Vue.component("child",{
+            template:`
+            <div>child-{{value}}
+            <button @click="handleClick">click</button>
+            </div>`,
+            props:["value"],
+            methods:{
+                handleClick(){
+                    this.$emit("input","222222")
+                }
+            }
+        })
+        new Vue({
+            el:"#box",
+            data:{
+                mytext:""
+            },
+            methods:{
+                handeleEvent(data){
+                   this.mytext=data
+                }
+            }
+           
+        })
+    </script>
+</body>
+</html>

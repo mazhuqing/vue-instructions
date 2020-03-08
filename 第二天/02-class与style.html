@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+    <style>
+        .red{
+            background-color: red;
+        }
+        .yellow{
+            background-color: blue;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div :class="classobj">动态切换class对象</div>
+        <div :class="classarr">动态切换class数组</div>
+
+        <div :style="styleobj">动态切换style对象</div>
+        <div :style="stylearr">动态切换style数组</div>
+    </div>
+
+    <script>
+         //Vue.set(vm.classobj,"dd",true) 拦截新的属性
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                classobj:{
+               aa:true,
+                bb:true,
+                cc:false
+                },
+                classarr:["aa","bb"],
+                styleobj:{
+                    backgroundColor:"red",
+                },
+                stylearr:[{
+                    backgroundColor:"yellow",
+                }]
+            }
+
+        })
+    </script>
+</body>
+</html>

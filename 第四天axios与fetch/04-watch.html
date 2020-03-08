@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <input type="text" v-model="mytext">
+        <ul>
+            <li v-for="data in list" :key="data">
+                {{data}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                mytext:'',
+                list:["aaa","bbb","ccc","ddd","add","cee","eee"],
+                oldlist:["aaa","bbb","ccc","ddd","add","cee","eee"]
+
+            },
+            watch:{
+                mytext(newvalue){
+                    console.log("mytext改变了",newvalue)
+                    this.list = this.oldlist.filter(item=>item.indexOf(newvalue)>-1)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

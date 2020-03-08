@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+       .b-enter-active {
+    animation: aaa 1.5s;
+  }
+
+  .b-leave-active {
+    animation: aaa 1.5s reverse;
+  }
+
+  @keyframes aaa {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+  }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <navbar>
+            <button @click="isShow=!isShow">click</button>  
+        </navbar>
+          <sidebar v-show="isShow"></sidebar>
+        
+      </div>
+   
+
+    <script>
+         Vue.component("navbar",{
+          template:`<div style="background:red;">
+           <slot></slot>
+          </div>`,
+          methods: {
+            handleClick(){
+              this.$emit("kerwinevent")
+              // this.handleEvent
+            }
+          },
+        })
+
+        // 把动画封装在组件中
+        Vue.component("sidebar",{
+            template:`
+            <transition name="b">
+            <div style="background:yellow;width:200px;height:500px;">
+                <ul>
+                  <li>111</li>  
+                  <li>111</li>  
+                  <li>111</li>  
+                  <li>111</li>  
+                </ul>  
+            </div>
+            </transition>
+            `
+        })
+
+
+        new Vue({
+          el:"#box",
+          data:{
+            isShow:true
+          },
+          methods: {
+            handleEvent(){
+              this.isShow =!this.isShow
+            }
+          },
+        })
+    </script>
+</body>
+</html>

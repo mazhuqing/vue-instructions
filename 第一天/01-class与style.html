@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+    <style>
+        .red{
+            background-color: red;
+        }
+        .yellow{
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <!-- <div v-bind:class="aa bb cc">动态切换class-对象写法</div> -->
+        <!-- 三个class名，让其中显示或者隐藏 -->
+        <div v-bind:class="classobj">动态切换class-对象写法</div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                classobj:{
+                    aa:true,
+                    bb:true,
+                    cc:false
+                } 
+            },
+        })
+        //Vue.set(vm.classobj,"dd",true) 拦截新的属性
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <child1></child1>
+        <child2></child2>
+      </div>
+
+      <script>
+        //中央事件总线：bus
+        //vuex
+
+        var bus = new Vue(); //中央事件总线,bus.$on（监听） 、 bus.$emit（触发）
+        Vue.component("child1",{
+            data(){
+                return{
+                    child1name:"1111111111111"
+                }
+            },
+            template:`
+                <div>
+                child1-<button @click="handleClick()">click</button>
+                </div>
+            `,
+            methods:{
+                handleClick(){
+                    console.log("emit触发bus事件")
+                    //bus.$emit触发事件
+                    bus.$emit("kerwinevent",this.child1name)
+                }
+            }
+        })
+
+        Vue.component("child2",{
+            template:`
+            <div>
+            child2--{{child2name}}
+            </div>
+            `,
+            data(){
+                console.log("自动被调用",this)
+                return {
+                    child2name:"00000000000000000"
+                }
+            },
+            mounted(){ // 钩子 ，生命周期函数。
+                //kerwinevent为事件名，自定义的
+                // bus.$on监听事件
+                bus.$on("kerwinevent",(data)=>{
+                    console.log("child2函数被执行",data)
+                    this.child2name=data;
+                })
+                console.log("组件渲染到dom上完成后会自动被调用此方法",this)
+               
+            }
+        })
+
+        var vm = new Vue({
+          el:"#box",
+          data:{
+            isShow:false
+          },
+          methods: {
+           
+          },
+        })
+      </script>
+</body>
+</html>

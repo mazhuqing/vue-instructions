@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <button @click="handClick()">click</button>
+        <ul>
+            <li v-for="data in datalist" :key="data.filmId">
+               <img :src="data.poster" :alt="data.name">
+                <h3>{{data.name}}</h3> 
+                <p>{{data.synopsis}}</p>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                datalist:[]
+            },
+            methods:{
+                handClick(){
+                    //fetch标准严格格式，get请求
+                    //res是形参，值可以随便写
+                    fetch("json/test.json?name=xioabai&age=18").then(res=>{
+                        // console.log(res)
+                        // 拿到的是状态码
+                        return res.json()  //按照json格式读出来或者text()文本格式
+                    }).then(res=>{
+                        //成功就会调用
+                        console.log(res.data.films)  //拿到最终的json格式数据，后端请求的
+                        this.datalist = res.data.films
+                    }).catch(err=>{
+                        //失败显示
+                        console.log(err)
+                    })
+
+                    //fetch标准严格格式，post请求第一种写法，form编码格式
+                    // fetch("json/test.json",{
+                    //     method:"post",
+                    //     headers:{ //必加
+                    //         "Content‐Type": "application/x‐www‐form‐urlencoded"
+                    //     },
+                    //     body:"name=xioabai&age=18" //放在body请求体中
+                    // }).then(res=>res.json()).then(res=>{
+                    //     console.log(res)
+                    // })
+
+                     //fetch标准严格格式，post请求第二种写法，json编码写法
+                    // fetch("json/test.json",{
+                    //     method:"post",
+                    //     headers:{
+                    //         "Content‐Type": "application/json"
+                    //     },
+                    //     body:JSON.stringify({  //放在body请求体中
+                    //         name:"xiaohua",
+                    //         age:18
+                    // }) 
+                    // }).then(res=>res.json()).then(res=>{
+                    //     console.log(res)
+                    // })
+
+                    //post 放在body安全
+                    /*
+                    1.form编码,name=xiaohu&age=18
+                    2.json编码,"{name:'xioahua',age=18}"
+                    */
+                },
+            },
+        })
+    </script>
+</body>
+</html>

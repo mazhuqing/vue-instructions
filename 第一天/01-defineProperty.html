@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box"></div>
+
+
+    <script>
+        var oBox = document.getElementById("box")
+        var obj = {}
+        //Object.defineProperty()为es5的方法
+        //语法：Object.defineProperty(obj, prop, descriptor)
+        //obj：必需。目标对象
+        // prop：必需。需定义或修改的属性的名字
+         // descriptor：必需。目标属性所拥有的特性
+        Object.defineProperty(obj,"myname",{
+            get(){
+                //obj.myname
+                console.log("被访问")
+            },
+            set(data){
+                console.log("被修改",data)
+                //obj.myname="xiaoming"
+                oBox.innerHTML=data
+            }
+        })
+    </script>
+</body>
+</html>

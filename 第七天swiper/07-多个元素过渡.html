@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <script src="../dist/vue.js"></script>
+    <style>
+        .a-enter-active,  .a-leave-active {
+            transition: all 1.5s;
+        }
+        .a-enter-to,  .a-leave-to{
+            opacity: 0;
+            transform: translateX(100px);
+        }
+
+        .b-enter-active{
+            animation: aaa 1.5s;
+        }
+        .b-leave-active{
+            animation: aaa 1.5s reverse;
+        }
+        @keyframes aaa{
+            0%{
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            100%{
+                opacity: 1;
+                transform: translateX(0px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1 class="animated tada">动画</h1> -->
+    <div id="box">
+        <button @click="isShow =! isShow">click</button>
+        
+        <!-- mode在多个互斥标签中可以用，单个不需要用 -->
+        <transition name="a" mode="out-in">
+
+            <!-- v-show和v-if都可以用 -->
+            <!-- 当相同标签名的元素切换时，需要通过key值来标记，让Vue区分 -->
+            <div v-if="isShow" key="a">
+                111111
+            </div>
+            <div v-else key="b">
+                22222
+            </div>
+        </transition>
+
+        
+         <transition name="a" mode="out-in">
+            <!-- transition中v-show不适合用 -->
+            <div v-show="isShow" key="c">
+                111111
+            </div>
+            <div v-show="!isShow" key="d">
+                22222
+            </div>
+        </transition>
+        
+    </div>
+
+    <script>
+        /*
+        diff:新老虚拟dom进行对比
+        
+        //old
+        {
+            type:"div",
+            key:1
+            text:"11111"
+        }
+
+         //new
+        {
+            type:"div",
+            key:2
+            text:"22222"
+        }
+        */
+
+        
+        new Vue({
+            el:"#box",
+            data:{
+                isShow:true
+            }
+        })
+    </script>
+</body>
+</html>

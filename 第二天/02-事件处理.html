@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        {{count}}
+        <button @click="handleClick()">click1</button>
+        <button @click="handleClick">click2</button>
+        <button @click="count++">click3</button>
+    
+        <input type="text" @input="handleInput1">
+        <input type="text" @input="handleInput2($event)">
+
+        <ul @click="handleUlClick()">
+            <li @click.stop="handleLiClick">111</li>
+            <li>222</li>
+            <li>333</li>
+        </ul>
+
+        <a href="http://www.baidu.com" @click.prevent="handleChange()">change</a>
+    </div>
+
+    <script>
+        new Vue({
+            el:"#box",
+            data:{
+                count:0
+            },
+            methods:{
+                handleClick(){
+                    this.count++;
+                },
+                handleInput1(evt){
+                    //evt.target.value:拿到原生dom
+                    console.log("input1",evt.target.value)
+                },
+                handleInput2(evt){
+                    //evt.target.value:拿到原生dom
+                    console.log("input2",evt.target.value)
+                },
+                handleLiClick(){
+                    //evt.stopPropagation()方法阻止事件的向上传播;
+                    consloe.log("li click")
+                },
+                handleUlClick(){
+                    console.log("ul click")
+                },
+                handleChange(){
+                    //ev.preventDefault()方法：取消事件的默认行为，禁止默认的打开链接
+                    console.log("click")
+                }
+            }
+        })
+    </script>
+</body>
+</html>

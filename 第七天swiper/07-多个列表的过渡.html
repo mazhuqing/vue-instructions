@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <style>
+        .b-enter-active {
+          animation: aaa 1.5s;
+        }
+    
+        .b-leave-active {
+          animation: aaa 1.5s reverse;
+        }
+    
+        @keyframes aaa {
+          0% {
+            opacity: 0;
+            transform: translateX(100px);
+          }
+    
+          100% {
+            opacity: 1;
+            transform: translateX(0px);
+          }
+        }
+      </style>
+
+</head>
+<body>
+    <div id="box">
+        <input type="text" v-model="mytext">
+        <button @click="handleCilick()">add</button>
+
+            <!-- transition-group是为一组标签使用的。
+                会被实例化成span标签 ，通过tag来改变标签，变成你想要的的标签-->
+            <transition-group tag="ul" name="b">
+                <li v-for="(item,index) in items" :key="item">
+                    {{item}}--{{index}}
+                    <button @click="handleDelClick(index)">del</button>
+                </li>
+            </transition-group>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                mytext:"",  //状态
+                items:["aaa","bbb","ccc","ddd"]
+            },
+            methods:{
+                handleCilick(){
+                    console.log("输入框value",this.mytext)
+                    this.items.push(this.mytext)
+         },
+                handleDelClick(index){
+                    console.log("del",index)
+                    this.items.splice(index,1)
+                }
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div>{{myname | myfilter1("1111","2222") | myfilter2}}</div>
+        <img :src="imgpath | imgfilter" >
+    </div>
+
+    <script>
+        Vue.filter("myfilter1",(data1,data2,data3)=>{
+            console.log(data1,data2,data3)
+            // data1为myname
+            return data1.substring(0,1)
+        })
+        Vue.filter("myfulter2",(data)=>{
+            return data.toUpperCase()
+        })
+
+        Vue.filter("imgfilter",(data)=>{
+            return data.replace("w.h","128.180")
+        })
+        new Vue({
+            el:"#box",
+            data:{
+                myname:"kerwin",
+                imgpath:"http://p1.meituan.net/w.h/movie/fcabb91dbae511e8a32af1deeb0c1cec204154.jpg"
+            },
+        })
+    </script>
+</body>
+</html>

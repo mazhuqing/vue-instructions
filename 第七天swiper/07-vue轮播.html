@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">  
+    <script src="https://unpkg.com/swiper/js/swiper.js"> </script>  
+    <script src="../dist/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <!-- 不加冒号是字符串，加了冒号是数字,布尔值 -->
+        <swiper :key="datalist.length" :a="3">
+            <div v-for="data in datalist" 
+            :key="data.filmId" class="swiper-slide">
+                {{data.name}}
+                <img :src="data.poster" alt="">
+            </div>
+
+        </swiper>
+    </div>
+
+    <script>
+         /*swiper初始化过早解决方案：
+                1、v-for=“datalist.length”  为什么用：起初是0，最后ajax请求回来之后就有长度，然后重新渲染
+                2、:key="datalist.length"   为什么用：用到diff算法，会做对比，刚开始id为0，ajax请求回来之后，
+                会重新有id，然后后来的会干掉之前的，然后重新渲染
+                */
+        Vue.component("swiper", {
+            template: `
+            <div class="awiper-container kerwin">
+            <div class="swiper-wrapper">
+               <slot><slot>
+            </div>
+        </div>
+            `,
+            //属性检查
+            //父传子
+            props:{
+                a:Number
+            },
+            mounted() {
+               
+                new Swiper(".kerwin", {
+                    loop: true,
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                    },
+                    autoplay: {
+                        delay: 2500,
+                        disableOnInteraction: false,
+                    },
+                    //接收传过来的属性
+                    slidesPerView:this.a,//一页显示几张
+                    spaceBetween:30,//每张图片间距30px
+                })
+            },
+        })
+
+        new Vue({
+            el: "#box",
+            data:{
+                datalist:[]
+            },
+            mounted() {
+                //ajax请求
+                fetch("../json/test.json").then(res=>res.json()).then(res=>{
+                    console.log(res.data.films)
+                    this.datalist = res.data.films
+                })
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <!-- 支持这种写法，驼峰命名法需要这样写 -->
+        <!-- @kerwinevent为自定义 -->
+        <!-- 也可以这样写@kerwinevent="handleEvent($event)" -->
+        <!-- 也可以监听多个 -->
+        <my-child @kerwinevent1="handleEvent1" @kerwinevent2="handleEvent2"></my-child>
+        <!-- <myChild></myChild> -->
+    </div>
+
+    <script>
+        Vue.component("my-child", {
+            template: `
+           <div>
+            child-<button @click="handleClick()">click</button>
+            </div>
+           `,
+            data() {
+                return {
+                    text: "child定义的状态"
+                }
+            },
+            methods: {
+                handleClick() {
+                    //把text状态传到父组件中
+                    // this.$emit为触发、分发
+                    this.$emit("kerwinevent2", 10000)
+                    this.$emit("kerwinevent1", this.text)
+                }
+            }
+        })
+
+
+
+
+        new Vue({
+            el: "#box",
+            data: {
+
+            },
+            methods: {
+                handleEvent1(data) {
+
+                    console.log("收到钱了1111", data)
+                },
+                handleEvent2(data) {
+
+                    console.log("收到钱了222", data)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

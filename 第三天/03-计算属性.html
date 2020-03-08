@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        {{myname.substring(0,1).toUpperCase() + myname.substring(1)}}
+        
+        <p>计算属性：{{getName}}</p>
+        <p>计算属性：{{getName}}</p>
+        
+        <p>方法：{{getNameMethod()}}</p>
+        <p>方法：{{getNameMethod()}}</p>
+    </div>
+
+        <script>
+            var vm = new Vue({
+                el:"#box",
+                data:{
+                    myname:"kerwin"
+                },
+                methods:{
+                    getNameMethod(){
+                        console.log("getNameMethod")
+                        return this.myname.substring(0,1).toUpperCase() + this.myname.substring(1)
+                    }
+                },
+                computed:{
+                    getName(){
+                        console.log("getName-computed")
+                        return this.myname.substring(0,1).toUpperCase() + this.myname.substring(1)
+                    }
+                }
+            })
+        </script>
+</body>
+</html>

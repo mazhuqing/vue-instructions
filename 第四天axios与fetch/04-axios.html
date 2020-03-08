@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="box">
+        <button @click="handClick()">axios</button>
+        <ul>
+            <li v-for="data in datalist" :key="data.filmId">
+               <img :src="data.poster" :alt="data.name">
+                <h3>{{data.name}}</h3> 
+                <p>{{data.synopsis}}</p>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                datalist:[]
+            },
+            methods:{
+                handClick(){
+                    //get请求方式
+                    axios.get("json/test.json?name='xiaoha'&age=18").then(res=>{
+                        //res.data才是真正的后端数据，axio返回回来会自动包装在在一个大对象中
+                        console.log(res.data.data.films)
+                        this.datalist=res.data.data.films
+                    })
+
+                    //post请求方式，第一种
+                    // axios.post("json/test.json","name=xiaohua&age=18").then(res=>{
+                    //     console.log(res.data)
+                    // })
+
+                     //post请求方式，第二种
+                    //  axios.post("json/test.json",{
+                    //      name:"xiaohua",
+                    //      age:18
+                    //  }).then(res=>{
+                    //      console.log(res.data)
+                    //  })
+                }
+            }
+            
+        })
+    </script>
+</body>
+</html>

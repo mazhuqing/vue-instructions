@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hammer库</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+  
+      .box{
+          width: 100px;
+          height: 100px;
+          background: red;
+      }
+  </style>
+  <script type="text/javascript" src="lib/hammer.js"></script>
+</head>
+<body>
+  <div class="box">
+		   	
+  </div>
+
+  <div class="box2"></div>
+
+  <script type="text/javascript">
+  // document.querySelector(".box").addEventListener("swipelef")
+    var hammertime = new Hammer(document.querySelector(".box"), {});
+      hammertime.get('swipe').set({ enable:true ,direction: Hammer.DIRECTION_ALL});
+
+      hammertime.on('tap', function(ev) {
+          console.log("点击了，解决了300ms");
+      });
+      hammertime.on('press', function(ev) {
+          console.log("长压了");
+      });
+
+      hammertime.on('swipeleft', function(ev) {
+          console.log("左滑了");
+      });
+      hammertime.on('swiperight', function(ev) {
+          console.log("右滑了");
+      });
+
+      hammertime.on('swipeup', function(ev) {
+          console.log("上滑了");
+      });
+
+      hammertime.on('swipedown', function(ev) {
+          console.log("下滑了");
+      });
+  </script>
+</body>
+</html>

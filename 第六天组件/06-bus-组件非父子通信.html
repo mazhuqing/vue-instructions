@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <child1></child1>
+        <child2></child2>
+    </div>
+
+    <script>
+        var bus = new Vue() //中央事件总线 bus.$on监听和bus.$emit触发一起连用
+
+        Vue.component("child1",{
+            template:`
+                <div>
+                    child1-<button @click="handleClick()">click</button>
+                </div>
+            `,
+            methods:{
+                handleClick(){
+                    bus.$emit("kerwinevent","来自child1的问候")
+                    console.log("emit触发bus事件")
+                }
+            }
+        })
+
+        Vue.component("child2",{
+            template:`
+                <div>
+                 child2
+                </div>
+            `,
+            mounted() {
+                //自动被调用，等child上树就会被执行，立即监听事件
+                console.log("自动被调用，等child上树就会被执行，立即监听事件")
+
+                bus.$on("kerwinevent",(data)=>{
+                    console.log("child2函数被执行",data)
+                })
+            },
+        })
+
+        var vm = new Vue({
+            el:"#box"
+        })
+    </script>
+</body>
+</html>

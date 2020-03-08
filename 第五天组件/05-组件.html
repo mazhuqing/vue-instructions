@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+    <style>
+        .navbar {
+          background: red;
+        }
+      </style>
+</head>
+<body>
+    <div id="box">
+        <navbar></navbar>
+  
+        <!-- <div>
+          <p></p>
+        </div>
+        <p></p> -->
+    </div>
+
+    <script type="text/javascript">
+        // vue 组件 ：扩展html元素
+
+        //组件是一个孤岛，无法（直接）访问到外部的 data,methods.......
+        //将来可以通过通信方式来进行沟通
+
+        //全局组件定义方式
+      
+
+        Vue.component("navbar",{
+          template:`
+            <div>
+              <nav style="background:yellow;">
+                <button @click="handleClick()">返回</button>
+                <navbarchild1></navbarchild1>
+                <navbarchild2></navbarchild2>
+                <ul>
+                    <li>11111</li>
+                    <li>22222</li>
+                </ul>
+                {{myname}}
+              </nav>
+              <div>最外层必须有root element</div>
+            </div>
+          `,
+          components:{
+            //局部定义组件
+            navbarchild2:{
+              // data(){}
+              watch: {
+                
+              },
+              template:`<div style="background:blue;">我是局部定义的，其他人休想得到我</div>`
+            }
+          },
+          methods: {
+            handleClick(){
+              console.log("返回功能")
+            }
+          },
+          //组件中 data必须是一个方法， return 返回对象
+          //保证data不会相互影响
+          data(){
+            return {
+              myname:"我是导航栏",
+              // myage
+
+            }
+          }
+        })
+        //全局定义的
+        Vue.component("navbarchild1",{
+          template:`
+            <div style="background:red;">
+                1.不要吐槽此时的组件，我虽然没有高亮，虽然没有代码提示，
+                但是这个时间，能用上我，也是一种好的选择
+                2.样式这个时候只能先写行内样式
+                3.之后单文件组件 都会解决这些问题。  
+            </div>
+          `
+        })
+
+        // vue实例， （root component）
+        new Vue({
+          el:"#box",
+          methods: {
+            
+          },
+          watch: {
+            
+          },
+          computed: {
+            
+          },
+        })
+
+  </script>
+</body>
+</html>

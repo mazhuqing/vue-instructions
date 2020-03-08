@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <script src="../dist/vue.js"></script>
+    <style>
+        .a-enter-active,  .a-leave-active {
+            transition: all 1.5s;
+        }
+        .a-enter-to,  .a-leave-to{
+            opacity: 0;
+            transform: translateX(100px);
+        }
+
+        .b-enter-active{
+            animation: aaa 1.5s;
+        }
+        .b-leave-active{
+            animation: aaa 1.5s reverse;
+        }
+        @keyframes aaa{
+            0%{
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            100%{
+                opacity: 1;
+                transform: translateX(0px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1 class="animated tada">动画</h1> -->
+    <div id="box">
+        <button @click="isShow =! isShow">click</button>
+        <transition name="a">
+            <!-- v-show和v-if都可以用 -->
+            <div v-show="isShow">
+                111111
+            </div>
+        </transition>
+
+        <transition name="b">
+            <!-- v-show和v-if都可以用 -->
+            <div v-if="isShow">
+                22222
+            </div>
+        </transition>
+
+        <!-- 在Vue中怎样用animate动画 -->
+        <transition enter-active-class="animated bounceInRight"
+            leave-active-class="animated bounceOutRight"
+        >
+            <!-- v-show和v-if都可以用 -->
+            <div v-if="isShow">
+               33333333
+            </div>
+        </transition>
+    </div>
+
+    <script>
+        new Vue({
+            el:"#box",
+            data:{
+                isShow:true
+            }
+        })
+    </script>
+</body>
+</html>

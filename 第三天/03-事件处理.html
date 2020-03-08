@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        {{count}}
+        <button @click="handleClick()">click1</button>
+        <button @click="handleClick">click2</button>
+        <button @click="count++">click3</button>
+
+        <input type="text" @input="handleInput1">
+        <input type="text" @input="handleInput2($event)">
+
+        <ul @click.self="handleUlClick()">
+            <li @click.stop.prevent="handleLiClick">111</li>
+            <li @click="handleLiClick">222</li>
+            <li @click.once="handleLiClick">333</li>
+        </ul>
+        <a href="http://www.baidu.com" @click.prevent="handleChange()"></a>
+        
+        <button @click="isActive && handleClick()">解绑测试</button>
+
+        <!-- 按键修饰符 @keyup.enter="xxx()" methods方法里写xxx(ev) -->
+        <input type="text" @keyup.13.ctrl="handleKeyup">
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                isActive:true,
+                count:0
+            },
+            methods:{
+                //键盘事件
+                handleKeyup(ev){
+                    console.log("keyup", ev.keyCode)
+                    /*if(ev.keyCode === 13){
+                        console.log(ev.target.value)
+                    }
+                    */
+                },
+                handleClick(){
+                    this.count++;
+                },
+                handleInput1(evt){
+                    console.log("input1",evt.target.value)
+                },
+                handleInput2(evt){
+                    console.log("input2",evt.target.value)
+                },
+                handleLiClick(){
+                    // evt.stopPropagation();
+                    
+                    console.log("li click")
+                },
+                handleUlClick(){
+                    console.log("ul click")
+                },
+                handleChange(){
+                    //ev.preventDefault()
+                    console.log("click")
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

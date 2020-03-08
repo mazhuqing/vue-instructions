@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <child v-if="isCreated"></child>
+    </div>
+
+    <script>
+        Vue.component("child",{
+            template:`
+            <div id="aaa">
+                child-{{myname}}
+                <ul>
+                    <li v-for="data in datalist">
+                        {{data.name}}
+                    </li>
+                </ul>
+            </div>
+            `,
+            data(){
+                return {
+                    myname:"1111",
+                    datalist:[]
+                }
+            },
+
+            //数据初始化beforeCreate，ceated
+            //第一次初始化可以修改状态有（beforeCreate、reated、beforeMount）
+            beforeCreate() {
+                console.log("beforeCreate")
+            },
+            //ceated生命周期做数据的初始化
+            ceated() {
+                this.myname="22222"
+                console.log("ceated","数据的初始化")
+            },
+
+            beforeMount() {
+                this.myname="3333"
+                console.log("beforeMount","无法访问到我们的状态对应的节点")
+            },
+
+
+
+            //mounted已经上dom树了，可以访问原生dom节点，事件监听，ajax，滑动条
+            //mounted为常用的生命周期，还有ceated、updated、destroyed
+            mounted() {
+                // var odiv= document.getElementById("aaa")
+                // console.log(odiv)
+
+                // window.onscroll = ()=>{
+                //   console.log("scrolll")
+                // }
+
+                fetch("../json/test.json").then(res=>res.json()).then(res=>{
+                    console.log(res)
+                    this.datalist = res.data.films //更新数据
+                })
+                console.log("mounted","可以访问dom,setInterval,window.onscroll,监听事件，ajax")
+            },
+
+
+
+            //beforeUpdate和updated可以一次页面执行多次，剩下的只能执行一次
+            beforeUpdate() {
+                console.log("beforeUpdate","访问li节点，访问不到")
+            },
+            updated() {
+                console.log("updated","更新数据之后可以访问dom")
+            },
+
+
+            //销毁
+            beforeDestroy() {
+                console.log("beforeDestroy--clearInterval,window.onscroll=null,$off")
+            },
+            destroyed() {
+                console.log("destroyed--clearInterval,window.onscroll=null,$off")
+            },
+        })
+
+        //new Vue也就是创建一个根组件
+       var vm =  new Vue({
+            el:"#box",
+            data:{
+                isCreated:"true"
+            }
+        })
+    </script>
+</body>
+</html>

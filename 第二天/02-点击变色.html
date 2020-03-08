@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+    <style>
+        .active{
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <ul>
+            <li :class="classobj1" @click="handleClick1()">正在热映</li>
+            <li :class="classobj2" @click="handleClick2()">即将上映</li>
+        </ul>
+
+        <ul>
+            <li v-for="(data,index) in datalist" :class="current === index ? 'active' : '' " @click="handleClick(index)">
+                {{data}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                classobj1:{
+                    active:true
+                },
+                classobj2:{
+                    active:false
+                },
+                datalist:["111","222","333"],
+                current:0
+            },
+            methods:{
+                handleClick1(){
+                    this.classobj1.active=true;
+                    this.classobj2.active=false;
+                },
+                handleClick2(){
+                    this.classobj1.active=false;
+                    this.classobj2.active=true;
+                },
+                handleClick(index){
+                    //改变current状态
+                    this.current=index;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

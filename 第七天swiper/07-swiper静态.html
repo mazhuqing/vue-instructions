@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">  
+    <script src="https://unpkg.com/swiper/js/swiper.js"> </script>  
+    <style>
+        .swiper-container {
+            width: 600px;
+            height: 300px;
+            background: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div class="swiper-container kerwin">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">11111111111</div>
+                <div class="swiper-slide">22222222222</div>
+                <div class="swiper-slide">3333333333</div>
+            </div>
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+
+        <!-- 分页器 -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <script>
+        new Swiper(".kerwin",{
+            // 无限轮播
+            loop:true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                el: '.swiper-pagination',
+                },
+                autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            }
+            //垂直轮播
+            // direction:"vertical"
+        })
+    </script>
+</body>
+</html>

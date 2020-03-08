@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+  
+        *{
+          margin: 0px;
+          padding: 0px;
+        }
+    
+        html,body{
+          width: 100%;
+          height: 100%;
+        }
+       footer ul {
+        display: flex;
+        position: fixed;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        height: 40px;
+       }
+    
+       footer ul li {
+        flex: 1;
+        text-align: center;
+        list-style: none;
+        height: 40px;
+        line-height: 40px;
+        background: gray;
+       }
+    </style>
+    <script src="../dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <!-- <home v-if="type==='home'"></home>
+        <list v-else-if="type==='list'"></list>
+       <shopcar v-else></shopcar> -->
+        
+       <!-- 保持活着的组件，固定的，不能改变，只是帮助component组件不会卸载之前的组件，重新渲染 -->
+       <keep-alive>
+        <!-- component  is不能随便改变,都是固定的，是vue组件 -->
+       <!-- 卸载之前的组件，重新渲染组件 -->
+       <component :is="type"></component>
+        </keep-alive>
+      
+       <!-- 动态组件 -->
+        <footer>
+            <ul>
+                <li @click="type='home'">首页</li>
+                <li @click="type='list'">列表</li>
+                <li @click="type='shopcar'">购物车</li>
+            </ul>
+        </footer>
+    </div>
+
+    <script>
+        Vue.component("home",{
+            template:`
+            <div>
+            home
+            </div>`
+        })
+
+        Vue.component("list",{
+            template:`
+            <div>
+                list
+            </div>`
+        })
+
+        Vue.component("shopcar",{
+            template:`
+            <div>
+                shopcar
+            </div>`
+        })
+
+        new Vue({
+            el:"#box",
+            data:{
+                type:"home"
+            }
+        })
+    </script>
+</body>
+</html>

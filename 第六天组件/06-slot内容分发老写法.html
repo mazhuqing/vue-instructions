@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <child>
+            <!-- slot也叫内容分发 -->
+            <div slot="a">联通卡</div>
+            <div slot="b">移动卡</div>
+            <div slot="c">电信卡</div>
+        </child>
+
+        <swiper>
+            <li>11111111<img src="5555"></li>
+            <li>2222222<img src="66666"></li>
+            <li>33333333<img src="44444"></li>
+        </swiper>
+    </div>
+
+    <script>
+        Vue.component("swiper",{
+            template:`
+            <div>
+            <ul>
+               <slot></slot>
+            </ul>
+            </div>
+            `
+        })
+
+        Vue.component("tabbar",{
+            template:`
+            <div>
+            <ul>
+               <slot></slot>
+            </ul>
+            </div>
+            `
+        })
+        Vue.component("child",{
+            template:`
+            <div>
+           11111
+            <slot name="a"></slot>
+            2222
+            <slot name="b"></slot>
+            333333
+            <slot name="c"></slot>
+            </div>
+            `
+        })
+
+        new Vue({
+            el:"#box",
+
+        })
+    </script>
+</body>
+</html>

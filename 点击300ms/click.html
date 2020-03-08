@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- 解决300ms的方法：方法一：加meta标签就可以 -->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <title>解决延时300ms</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+  
+    body{
+      height: 1000px;
+    }
+
+ /* 解决300ms的方法：方法二：touch-action: manipulation; */
+    /* *{
+      控制移动端手机触摸行为，不允许双击缩放
+      touch-action: manipulation;
+    } */
+  </style>
+
+  <!-- 解决300ms的方法：方法三：引入fastclick这个库就可以 -->
+  <script type="text/javascript" src="lib/fastclick.js"></script> 
+  <script type="text/javascript" >
+    if ('addEventListener' in document) {
+    document.addEventListener('DOMContentLoaded', function() {
+      FastClick.attach(document.body);
+    }, false);
+  }
+</script> 
+</head>
+<body>
+  <div class="box">
+    <!-- touchstart是移动端有的事件，手放到屏幕上，会立即触发事件 -->
+		<button ontouchstart="handleStart()"  onclick="handleClick()">click1111111</button>    	
+    </div>
+
+    <script type="text/javascript">
+    	function handleStart(){
+        // 打印时间戳，距离1970年1.1日8点的毫秒数，
+				console.log("touchstart",Date.now());
+				//TODO dwadwa
+    	}
+
+    	function handleClick(){
+				console.log("click",Date.now());
+				//FIXME dwadwa
+    	}
+    </script>
+</body>
+</html>

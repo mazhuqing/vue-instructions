@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div v-color="'red'">111111111</div>  
+        <div v-color="'yellow'">22222222</div>  
+        <div v-color="mycolor" >3333333</div>   
+      </div>	
+  
+      <script type="text/javascript">
+        // v-if="isShow" v-for v-model v....
+        // v-kerwin v-swipe  操作底层dom
+       
+        Vue.directive("color",function(el,binding){
+          // console.log("111111111111")
+          el.style.background=binding.value
+  
+        })
+  
+        var vm = new Vue({
+          el:"#box",
+          data:{
+            mycolor:"blue"
+          }
+        })
+    </script>
+</body>
+</html>

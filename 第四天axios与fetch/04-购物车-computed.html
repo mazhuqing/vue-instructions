@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        全选：<input type="checkbox"  v-model="isAllcomputedChecked"/>
+        <ul>
+          <li v-for="(data,index) in list" :key="data.id" style="overflow: hidden;">
+            <input type="checkbox" :value="data" v-model="checkgroup" style="float: left;"
+           />
+            <div style="float: left;">
+              <div>{{data.name}}</div>
+              <div>价格:{{data.price}}</div>
+              <!-- <div>数量：{{data.number}}</div> -->
+            </div>
+
+            <div style="float: left;margin-left: 20px;">
+              <button @click="handleDel(data)">-</button>
+              {{data.number}}
+              <button @click="data.number++">+</button>
+            </div>
+
+            <div style="float: right;">
+              <button @click="removeList(index,data.id)" >remove</button>
+            </div>
+          </li>
+        </ul>
+        <!-- {{name}}
+
+        {{getName()}} -->
+
+        {{checkgroup}}
+
+        <p>总金额:{{ getSum }}</p>
+    </div>
+
+    <script type="text/javascript">
+        var vm =  new Vue({
+           el:"#box",
+           data:{
+             name:"kerwin",
+             checkgroup:[],
+             isAllChecked:false,
+             list:[
+                 {
+                       name:"商品1",
+                       price:10,
+                       number:1,
+                       id:"1",
+                 },
+                     {
+                       name:"商品2",
+                       price:20,
+                       number:2,
+                       id:"2",
+                     },
+                     {
+                       name:"商品3",
+                       price:30,
+                       number:3,
+                       id:"3",
+                     }
+               ]
+           },
+           methods: {
+            //    删除
+            removeList(index,id){
+                // console.log("点击")
+                // 删除checkgroup
+                this.checkgroup=this.checkgroup.filter(item => item.id != id)
+                // 删除list
+                this.list.splice(index,1)
+                // 同步全选按钮是否勾选
+                // this.handleItemChange()
+            },
+            //  // 每个chekcbox 改变触发， 判读数组的长度与list长度
+            //  handleItemChange(){
+            //    console.log(this.checkgroup.length)
+            //    if(this.checkgroup.length===this.list.length && this.list.length !== 0){
+            //      //全选chekcbox勾上
+            //      this.isAllChecked = true
+            //    }else{
+            //      // 取消checkbox勾选
+            //      this.isAllChecked = false
+            //    }
+            //  },
+ 
+             //全选按钮处理
+            //  handleAllChecked(evt){
+            //    console.log("活买卖不横别人，click事件也好用吧，哈哈--",evt.target.checked)
+            //    console.log("但此时，this.isAllChecked还未同步呢，等到change事件才同步",this.isAllChecked)
+            //    if(evt.target.checked){
+            //      //全选中
+            //      this.checkgroup = this.list
+            //    }else{
+            //      //全不选中
+            //      this.checkgroup = []
+            //    }
+            //  },
+             //商品减少
+             handleDel(data){
+               data.number--
+               if(data.number===0){
+                 data.number =1
+               }
+             },
+             // getName(){
+             //   return this.name+"11111111";
+             // },
+           
+           },
+           computed:{
+                  //计算总金额
+             getSum(){
+               var sum = 0;
+               for(var i in this.checkgroup){
+                 sum += this.checkgroup[i].price*this.checkgroup[i].number
+               }
+               return sum
+               // return "1111"
+             },
+             isAllcomputedChecked:{
+                 get(){
+                     var mychecked
+                     if(this.checkgroup.length===this.list.length && this.list.length !== 0){
+                 //全选chekcbox勾上
+                 mychecked = true
+               }else{
+                 // 取消checkbox勾选
+                 mychecked = false
+               }
+               return mychecked
+                 },
+                 set(checked){
+                    console.log(checked)
+                    if(checked){
+                        this.checkgroup = this.list
+                    }else{
+                        this.checkgroup = []
+                    }
+                 }
+             }
+           }
+         })
+     </script>
+</body>
+</html>

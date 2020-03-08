@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<style>
+    .bgcolor{
+        background-color: brown;
+    }
+    .bgcolor1{
+        background-color: red;
+    }
+</style>
+<body>
+    <div id="box">
+        {{10+20}}
+        <!-- 不加引号是变量 -->
+        {{10>20 ? 'aaa':'bbb'}}  
+        {{myname}}
+        {{myhtml}}
+
+        <!-- 指令 -->
+        <div v-html='myhtml'></div>
+
+        <div v-if="isCreated">
+            我是动态创建和删除
+        </div>
+        <div v-show="isShow">
+            我是动态显示和隐藏
+        </div>
+
+        <ul>
+            <!-- anydata随便命名 -->
+            <li v-for="(anydata,index) in datalist"> 
+               {{anydata}}
+            </li>
+        </ul>
+        <div v-bind:class="isRed?'bgcolor':'bgcolor1'">1111</div>
+        <div :class="isRed?'bgcolor':'bgcolor1'">11111</div>
+        
+        <img v-bind:src="imgpath">
+
+        <button v-on:click="handleClick()">click1</button>
+        <button @click="handleClick()">click2</button>
+    </div>
+    <div id="box2">
+        {{ myname }}-{{myhtmls}}
+      </div>
+
+    <script>
+var vm = new Vue ({
+    el:'#box',
+    data:{//这可以叫做状态
+        myname:'xiaomi',
+        myhtml:'<b>加粗</b>', //后端返回给我们的
+        isCreated:true,
+        isShow:true,
+        isRed:true,
+        datalist:["xiaoming","haha","heeie"],
+        whichColor:"bgcolor",
+        imgpath:"https://pic.maizuo.com/usr/movie/c14daaf24fc50c767f5c067f2c05316b.jpg?x-oss-process=image/quality,Q_70"
+    },
+    methods:{
+        handleClick(){
+            console.log("handleClick")
+            //this指向是vue实例
+            this.isCreated =! this.isCreated
+            this.isRed =! this.isRed
+        }
+    }
+})
+    </script>
+</body>
+</html>

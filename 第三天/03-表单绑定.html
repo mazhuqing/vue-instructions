@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <input type="text" v-model="mytext">
+        <input type="password" v-model="mypassword">
+        {{mytext}}--{{mypassword}}
+        <br>
+        <textarea v-model="mytext"></textarea>
+
+        <br>
+        全选：<input type="checkbox" v-model="isAllChecked">
+        <p>
+            兴趣爱好：
+            <input type="checkbox" v-model="checkgroup" value="vue">vue
+            <input type="checkbox" v-model="checkgroup" value="react">react
+            <input type="checkbox" v-model="checkgroup" value="jquery">jquery
+        </p>
+        {{checkgroup}}
+
+        <p>
+            最喜爱的js库或者框架：
+            <input type="radio" v-model="kerwin" value="vue" name="aaa">vue
+            <input type="radio" v-model="kerwin" value="react" name="bbb">react
+            <input type="radio" v-model="kerwin" value="jquery" name="ccc">jquery
+        </p>
+        {{kerwin}}
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                isAllChecked:false,
+                mytext:"",
+                mypassword:"",
+                checkgroup:[],
+                kerwin:""
+            }
+        })
+        //mvc mvvm (双向绑定 v-model) mvp
+    </script>
+</body>
+</html>

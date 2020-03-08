@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">  
+    <script src="https://unpkg.com/swiper/js/swiper.js"> </script>  
+    <script src="../dist/vue.js"></script>
+    <style>
+        .swiper-container {
+        width: 600px;
+        height: 300px;
+        background-color: yellow;
+  }  
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div class="awiper-container kerwin">
+            <div class="swiper-wrapper">
+                <div v-for="(data,index) in datalist" :key="index" class="swiper-slide">
+                    {{data}}
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <script>
+       
+        new Vue({
+            el:"#box",
+            data:{
+                datalist:[]
+            },
+            mounted(){
+                //ajax
+                setTimeout(()=>{
+                    this.datalist=["1111","2222","3333"],
+                    //状态赋值完，异步更新dom树（上树）
+                this.myswiper = new Swiper(".kerwin",{
+            // 无限轮播
+            loop:true,
+            navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+          }
+            //垂直轮播
+            // direction:"vertical"
+        })
+                },2000)
+            },
+            updated(){
+            //  让swiper自动更新一次
+            console.log(this.swiper)
+            this.myswiper.updated()
+            }
+        })
+        // 放在updated不建议用，因为会经常更新数据
+
+      
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <!-- 首页中引入的 -->
+       <navbar mytitle="hone" :myshow="false"></navbar>
+       <!-- 列表页面引入的 -->
+       <navbar mytitle="list" :myshow="true"></navbar>
+       <!-- 购物车页面引入的 -->
+       <navbar mytitle="shopcar" :myshow="true"></navbar>
+    </div>
+
+    <script>
+        Vue.component("navbar",{
+            template:`
+            <nav>
+                <button v-if="myshow">返回</button>
+                <span>我是导航---{{mytitle}}</span>
+                <button v-if="myshow">主页</button>
+            </nav>
+            `,
+
+            // 接受父组件传来的属性，父传子
+            // props:["mytitle","myshow"]
+            //属性验证
+           props:{
+              mytext:String,
+               mytitle:String,
+               myshow:Boolean  //接受的myshow必须是boolean类型
+           }
+        })
+
+         new Vue({
+            el:"#box",
+            data:{
+          text:"我是在父组件中定义"
+        }
+        })
+    </script>
+</body>
+</html>
